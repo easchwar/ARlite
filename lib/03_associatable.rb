@@ -44,6 +44,8 @@ module Associatable
       fk = self.send(options.foreign_key)
       options.model_class.where("#{options.table_name}.#{pk}" => fk).first
     end
+
+    self.assoc_options[name] = options
   end
 
   def has_many(name, options = {})
@@ -56,11 +58,10 @@ module Associatable
   end
 
   def assoc_options
-    # Wait to implement this in Phase IVa. Modify `belongs_to`, too.
+    @assoc_options ||= {}
   end
 end
 
 class SQLObject
   extend Associatable
-  # Mixin Associatable here...
 end
